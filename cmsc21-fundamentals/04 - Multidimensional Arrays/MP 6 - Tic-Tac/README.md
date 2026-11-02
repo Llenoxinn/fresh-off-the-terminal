@@ -4,6 +4,7 @@ CMSC 21 machine problem on **2D arrays**: simulate a game of **tic-tac-toe** on 
 
 ## Contents
 
+- [Files](#files)
 - [Problem](#problem)
   - [Input](#input)
   - [Output](#output)
@@ -18,6 +19,22 @@ CMSC 21 machine problem on **2D arrays**: simulate a game of **tic-tac-toe** on 
 - [Box-Drawing Characters](#box-drawing-characters)
 - [Things the Statement Leaves Open](#things-the-statement-leaves-open)
 - [Testing Checklist](#testing-checklist)
+- [About This Solution](#about-this-solution)
+
+---
+
+## Files
+
+| File | Description |
+|---|---|
+| [tictactoe.c](tictactoe.c) | Solution: the game loop, `display` from the [startup file](#startup-file), `checkWin` and `checkDraw` |
+
+```bash
+gcc -Wall -o tictactoe tictactoe.c
+./tictactoe < moves.txt
+```
+
+The startup file itself is reproduced [below](#startup-file) only. It isn't a separate file in this folder.
 
 ---
 
@@ -316,7 +333,7 @@ The comment in the startup file (`//201 203 187 ...`) lists the same characters'
 | Main diagonal | `1 1`, `1 2`, `2 2`, `1 3`, `3 3` | Player 1 |
 | Anti-diagonal | `1 3`, `1 1`, `2 2`, `1 2`, `3 1` | Player 1 |
 | Draw | `1 1`, `1 2`, `1 3`, `2 2`, `2 1`, `2 3`, `3 2`, `3 1`, `3 3` | Draw |
-| Win on the 9th move | `1 1`, `1 2`, `1 3`, `2 1`, `2 3`, `2 2`, `3 2`, `3 3`, `3 1` | Player 1 (bottom row… check by hand), not a draw |
+| Win on the 9th move | `1 1`, `1 2`, `1 3`, `2 1`, `2 2`, `2 3`, `3 2`, `3 1`, `3 3` | Player 1 (main diagonal), **not** a draw |
 | Extra input after a win | The sample plus `3 3` | The game stops after `1 3`; no 6th board |
 
 Final board of the draw:
@@ -331,3 +348,32 @@ Final board of the draw:
 ╚═══╩═══╩═══╝
 Freshest moment! Both players unleashing their creativity!
 ```
+
+---
+
+## About This Solution
+
+[tictactoe.c](tictactoe.c) produces the right boards and the right result for every game in the [testing checklist](#testing-checklist), including the win on the 9th move and the extra input after a win.
+
+| Piece | Role |
+|---|---|
+| `#define SIZE 3` | Board size, used in the parameter types and loops |
+| `player` | `'x'` or `'o'`, switched after each valid move. The player number comes from it: `player == 'x' ? 1 : 2` |
+| `display` | Unchanged from the startup file |
+| `checkWin(table)` | Returns 1 if any row, column or diagonal has three equal, non-empty cells. Each loop iteration checks column `i` and row `i` together |
+| `checkDraw(table)` | Returns 1 if no cell is `' '`. It's called only after `checkWin` fails, so a full board with a winner counts as a win |
+| Main loop | Echoes the move, converts to 0-based indices, places the mark, displays, then checks for a win and a draw |
+
+Unlike the single `checkStatus` in [the approach above](#checking-for-a-winner-or-a-draw), the solution splits the check into **two functions**. The win check doesn't need to know who won: the player who just moved is the only one who could have.
+
+**Taken cell:** if the cell is already filled, the board is shown again unchanged and the **same player** moves again. This follows the first suggestion in [Things the Statement Leaves Open](#things-the-statement-leaves-open).
+
+**Issues found when testing:**
+
+| Issue | What happens | Fix |
+|---|---|---|
+| Input ends before the game does | `scanf` fails, `r` and `c` keep their old values (a taken cell), and `do { ... } while(1)` redisplays the board **forever**. It printed over 800,000 lines in 3 seconds | `if (scanf("%i %i", &r, &c) != 2) break;` |
+| Row or column outside 1–3 | `tableS[r][c]` reads and writes outside the array | Skip the move if `r` or `c` is outside 0–2 after the `--` |
+| No newline after the final message | The last line ends without `\n` | Add `\n` to both final `printf`s |
+
+The first issue only affects input where the game never finishes, which the sample doesn't include. A checker that sends such input would see the program hang until it times out.
