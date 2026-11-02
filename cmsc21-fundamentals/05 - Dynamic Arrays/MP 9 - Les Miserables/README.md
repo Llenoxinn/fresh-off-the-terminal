@@ -4,6 +4,7 @@ CMSC 21 machine problem on **dynamic memory**: implement a **vector**, an array 
 
 ## Contents
 
+- [Files](#files)
 - [Problem](#problem)
   - [The vector](#the-vector)
   - [Required operations](#required-operations)
@@ -24,6 +25,19 @@ CMSC 21 machine problem on **dynamic memory**: implement a **vector**, an array 
   - [`main`](#main)
 - [Dynamic Memory in C](#dynamic-memory-in-c)
 - [Edge Cases](#edge-cases)
+
+---
+
+## Files
+
+| File | Description |
+|---|---|
+| [miserable.c](miserable.c) | Solution: a `Vector` structure with a `malloc`ed array that grows by 5, the required operations (`remove` is named `removeItem` to avoid the clash with `<stdio.h>`), `isSorted` and `deleteDuplicates` |
+
+```bash
+gcc -Wall -o miserable miserable.c
+./miserable < input.txt
+```
 
 ---
 

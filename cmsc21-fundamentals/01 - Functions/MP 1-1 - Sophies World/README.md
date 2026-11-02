@@ -4,6 +4,7 @@ CMSC 21 machine problem on **functions and running time**: decide whether a numb
 
 ## Contents
 
+- [Files](#files)
 - [Problem](#problem)
   - [Sophie Germain primes](#sophie-germain-primes)
   - [Input and output](#input-and-output)
@@ -17,6 +18,19 @@ CMSC 21 machine problem on **functions and running time**: decide whether a numb
   - [Avoiding overflow](#avoiding-overflow)
 - [Edge Cases](#edge-cases)
 - [Running Time](#running-time)
+
+---
+
+## Files
+
+| File | Description |
+|---|---|
+| [Germain.c](Germain.c) | Solution: three primality-check functions (to n−1, to n/2, to √n), each skipping even numbers and returning the iteration count with the result encoded in its sign |
+
+```bash
+gcc -Wall -o germain Germain.c
+echo 11 | ./germain
+```
 
 ---
 

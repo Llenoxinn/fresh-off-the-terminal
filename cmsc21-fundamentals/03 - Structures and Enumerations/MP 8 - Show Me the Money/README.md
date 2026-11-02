@@ -4,6 +4,7 @@ CMSC 21 machine problem on **structures, enumerations and multi-file programs**:
 
 ## Contents
 
+- [Source Files](#source-files)
 - [Problem](#problem)
   - [Transactions](#transactions)
   - [Required functions](#required-functions)
@@ -24,6 +25,21 @@ CMSC 21 machine problem on **structures, enumerations and multi-file programs**:
 - [Multi-File Programs](#multi-file-programs)
 - [Notes on the Startup Files and Sample](#notes-on-the-startup-files-and-sample)
 - [Testing Checklist](#testing-checklist)
+
+---
+
+## Source Files
+
+| File | Description |
+|---|---|
+| [bank.h](bank.h) | The `account` and `list` structures, the enumerations, and the function declarations |
+| [bank.c](bank.c) | The function definitions |
+| [main.c](main.c) | Reads the transactions and processes them |
+
+```bash
+gcc -Wall -o bank main.c bank.c
+./bank < input.txt
+```
 
 ---
 

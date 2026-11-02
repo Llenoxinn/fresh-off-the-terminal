@@ -4,6 +4,7 @@ CMSC 21 machine problem assignment on **writing your own functions**. Twenty sma
 
 ## Contents
 
+- [Files](#files)
 - [Rules](#rules)
 - [Input](#input)
 - [Output](#output)
@@ -16,6 +17,19 @@ CMSC 21 machine problem assignment on **writing your own functions**. Twenty sma
 - [Edge Cases to Decide](#edge-cases-to-decide)
 - [Testing Checklist](#testing-checklist)
 - [Honor Code](#honor-code)
+
+---
+
+## Files
+
+| File | Description |
+|---|---|
+| [FunctionsGalore.c](FunctionsGalore.c) | Solution: one function per item (20 items), with `main` dispatching on the item number through a `switch` and doing all the input and output |
+
+```bash
+gcc -Wall -o galore FunctionsGalore.c
+./galore < input.txt
+```
 
 ---
 

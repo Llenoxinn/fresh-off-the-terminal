@@ -34,7 +34,7 @@ The second course: deeper C, data structures, and an introduction to **C++**.
 | [Multidimensional Arrays](cmsc21-fundamentals/04%20-%20Multidimensional%20Arrays/) | [2 Dimensions](cmsc21-fundamentals/04%20-%20Multidimensional%20Arrays/MP%206-mini%20-%202%20Dimensions/), [Tic-Tac-Toe](cmsc21-fundamentals/04%20-%20Multidimensional%20Arrays/MP%206%20-%20Tic-Tac/), [Count the Objects](cmsc21-fundamentals/04%20-%20Multidimensional%20Arrays/MP%207%20-%20Count%20the%20Objects/) |
 | [Dynamic Arrays](cmsc21-fundamentals/05%20-%20Dynamic%20Arrays/) | [Les Misérables (Vector)](cmsc21-fundamentals/05%20-%20Dynamic%20Arrays/MP%209%20-%20Les%20Miserables/) |
 | [Linked Lists](cmsc21-fundamentals/06%20-%20Linked%20Lists/) | [The Polynomial has many Faces](cmsc21-fundamentals/06%20-%20Linked%20Lists/MP%2010%20-%20The%20Polynomial%20has%20many%20Faces/), [First and Foremost a Student](cmsc21-fundamentals/06%20-%20Linked%20Lists/MP%2011%20-%20First%20and%20Foremost%20a%20Student/) |
-| [Classes (C++)](cmsc21-fundamentals/07%20-%20Classes%20(C++)/) | [Mambo Number Class](cmsc21-fundamentals/07%20-%20Classes%20(C++)/MP%2013%20-%20Mambo%20Number%20Class/) |
+| [Classes (C++)](cmsc21-fundamentals/07%20-%20Classes%20%28C++%29/) | [Mambo Number Class](cmsc21-fundamentals/07%20-%20Classes%20%28C++%29/MP%2013%20-%20Mambo%20Number%20Class/) |
 
 ---
 

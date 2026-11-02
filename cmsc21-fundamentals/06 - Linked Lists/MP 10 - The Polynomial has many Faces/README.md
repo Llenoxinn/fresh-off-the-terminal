@@ -6,6 +6,7 @@ It builds on [MP 2: Terms of Endearment](../../03%20-%20Structures%20and%20Enume
 
 ## Contents
 
+- [Files](#files)
 - [Problem](#problem)
   - [Input](#input)
   - [Output](#output)
@@ -23,6 +24,19 @@ It builds on [MP 2: Terms of Endearment](../../03%20-%20Structures%20and%20Enume
   - [Display](#display)
 - [Linked Lists in C](#linked-lists-in-c)
 - [Edge Cases](#edge-cases)
+
+---
+
+## Files
+
+| File | Description |
+|---|---|
+| [polynomics.c](polynomics.c) | Solution: polynomials as linked lists of terms, with simplify, add, subtract, multiply and display |
+
+```bash
+gcc -Wall -o polynomics polynomics.c
+./polynomics < input.txt
+```
 
 ---
 

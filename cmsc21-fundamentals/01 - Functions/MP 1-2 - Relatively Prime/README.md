@@ -4,6 +4,7 @@ CMSC 21 machine problem on **functions and running time**: decide whether two in
 
 ## Contents
 
+- [Files](#files)
 - [Problem](#problem)
   - [Relatively prime numbers](#relatively-prime-numbers)
   - [Input and output](#input-and-output)
@@ -14,6 +15,19 @@ CMSC 21 machine problem on **functions and running time**: decide whether two in
 - [Why Euclid Works](#why-euclid-works)
 - [Running Time](#running-time)
 - [Edge Cases](#edge-cases)
+
+---
+
+## Files
+
+| File | Description |
+|---|---|
+| [AreWeRelatives.c](AreWeRelatives.c) | Solution: `amINaiveForYou` (linear search down from the smaller number) and `euclideanAlgae` (Euclidean algorithm), each with exactly 2 arguments |
+
+```bash
+gcc -Wall -o relatives AreWeRelatives.c
+echo "11 23" | ./relatives
+```
 
 ---
 

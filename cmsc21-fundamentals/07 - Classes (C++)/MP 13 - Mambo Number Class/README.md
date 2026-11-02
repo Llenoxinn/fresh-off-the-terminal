@@ -4,6 +4,7 @@ CMSC 21 machine problem introducing **C++ classes**: build a `Number` class that
 
 ## Contents
 
+- [Files](#files)
 - [Problem](#problem)
   - [Properties](#properties)
   - [Required members](#required-members)
@@ -27,6 +28,21 @@ CMSC 21 machine problem introducing **C++ classes**: build a `Number` class that
   - [Compiling](#compiling)
 - [Why Keep the Data Private](#why-keep-the-data-private)
 - [Testing Checklist](#testing-checklist)
+
+---
+
+## Files
+
+| File | Description |
+|---|---|
+| [number.h](number.h) | The `Number` class declaration: private data and helpers, public constructors and member functions |
+| [number.cpp](number.cpp) | The member function definitions |
+| [main.cpp](main.cpp) | Reads the two integers and exercises the class |
+
+```bash
+g++ -Wall -o number main.cpp number.cpp
+echo "10 12" | ./number
+```
 
 ---
 

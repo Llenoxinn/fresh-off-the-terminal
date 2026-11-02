@@ -6,6 +6,7 @@ It's the linked-list version of [MP 8: Show me the money!](../../03%20-%20Struct
 
 ## Contents
 
+- [Files](#files)
 - [Problem](#problem)
   - [Student information](#student-information)
   - [Input](#input)
@@ -22,6 +23,19 @@ It's the linked-list version of [MP 8: Show me the money!](../../03%20-%20Struct
   - [Comparing strings](#comparing-strings)
 - [Singly vs. Doubly Linked](#singly-vs-doubly-linked)
 - [Edge Cases](#edge-cases)
+
+---
+
+## Files
+
+| File | Description |
+|---|---|
+| [areYouAStud.c](areYouAStud.c) | Solution: the class list as a linked list of student records, with insert, remove, access, edit and the two filters |
+
+```bash
+gcc -Wall -o students areYouAStud.c
+./students < input.txt
+```
 
 ---
 
