@@ -4,6 +4,7 @@ CMSC 21 machine problem on **2D arrays and recursion**: treat a grid of `0`s and
 
 ## Contents
 
+- [Files](#files)
 - [Problem](#problem)
   - [Input](#input)
   - [Output](#output)
@@ -19,6 +20,20 @@ CMSC 21 machine problem on **2D arrays and recursion**: treat a grid of `0`s and
 - [Recursion Notes](#recursion-notes)
 - [Edge Cases](#edge-cases)
 - [Testing Checklist](#testing-checklist)
+- [About This Solution](#about-this-solution)
+
+---
+
+## Files
+
+| File | Description |
+|---|---|
+| [arrayKoPo.c](arrayKoPo.c) | Solution: `countObjects` scans the image, `labeling` recursively labels each object using direction arrays |
+
+```bash
+gcc -Wall -o arrayKoPo arrayKoPo.c
+./arrayKoPo < input.txt
+```
 
 ---
 
@@ -323,4 +338,38 @@ Expected:
 4 Objects found
 1 Objects found
 3 Objects found
+```
+
+---
+
+## About This Solution
+
+[arrayKoPo.c](arrayKoPo.c) finds the **correct number of objects** for both samples and all six images in the [testing checklist](#testing-checklist). It also handles an all-ones 100 × 100 image without running out of stack.
+
+| Piece | Role |
+|---|---|
+| `int px[100][100]` | The image, declared at the full 100 × 100 capacity in `main`. Only the top-left `rn × cn` part is used |
+| `countObjects(px, rn, cn)` | Scans row by row. Each unlabeled `1` starts a new object: it calls `labeling`, then increments the label. Returns `labelpx - 2` |
+| `labeling(px, rn, cn, row, column, label)` | Bounds check, then "already labeled or background" check, then labels the pixel and recurses on all 8 neighbors |
+| `directionrow[]`, `directioncolumn[]` | The 8 neighbor offsets as two parallel arrays, so one loop replaces the 8 written-out calls (still in the comments) |
+
+**Why `px[rn][cn]` didn't work** (the comment in `main`): the functions take `int[100][100]`, so inside them, row `i` starts at element `i × 100`. A variable-length `int px[rn][cn]` stores its rows `cn` elements apart instead. When the two disagree, `px[i][j]` inside the function reads the wrong memory for every row after the first. Declaring `int px[100][100]` makes both sides agree. (The other option is changing the parameters to `int px[rn][cn]` with `rn` and `cn` first, as in [MP 6-mini](../MP%206-mini%20-%202%20Dimensions/#about-this-solution), but the MP fixes the signature at `int[100][100]`.)
+
+**Output wording differs from the sample:**
+
+| Count | Sample expects | `arrayKoPo.c` prints |
+|---|---|---|
+| 2 | `2 Objects found` | `2 objects found` |
+| 1 | `1 Objects found` (by the sample's format) | `1 object found` |
+| 0 | `0 Objects found` | `0 object found` |
+
+The counts are right, but the word is lowercase and changes with the count, so an exact-match checker would reject every line. Two details:
+
+- **Capital O:** the sample uses `Objects`.
+- **Singular vs. plural:** `objects > 1 ? ... : ...` treats 0 as singular. In English, 0 takes the plural ("0 objects"). If you do want proper grammar, the condition should be `objects == 1`.
+
+To match the sample exactly:
+
+```c
+printf("%i Objects found\n", objects);
 ```
