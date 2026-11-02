@@ -4,6 +4,7 @@ CMSC 21 machine problem assignment on **structures and enumerations**: simulate 
 
 ## Contents
 
+- [Files](#files)
 - [Story](#story)
 - [Rules of the Duel](#rules-of-the-duel)
   - [Bantugan stats](#bantugan-stats)
@@ -19,8 +20,22 @@ CMSC 21 machine problem assignment on **structures and enumerations**: simulate 
 - [Rules Not Spelled Out in the Statement](#rules-not-spelled-out-in-the-statement)
 - [Modeling with Structures and Enumerations](#modeling-with-structures-and-enumerations)
 - [Turn Algorithm](#turn-algorithm)
+- [About This Solution](#about-this-solution)
 - [Testing Checklist](#testing-checklist)
 - [Honor Code](#honor-code)
+
+---
+
+## Files
+
+| File | Description |
+|---|---|
+| [Bantugans.c](Bantugans.c) | Full solution: a `Bantugan` structure, `weaponType` and `shieldType` enumerations, and functions to print stats, clamp values and resolve an attack |
+
+```bash
+gcc -Wall -o bantugans Bantugans.c
+./bantugans < sample_input.txt
+```
 
 ---
 
@@ -260,7 +275,7 @@ Nobody falls within the 3 turns each, so no final message is printed.
 
 What the sample reveals:
 
-- **Manna regenerates for the attacker, at the start of his turn**, capped at 10. Timan's manna stays at 4 during Dua's turn 4, then rises to 6 on Timan's turn 5. On turn 3 he was at 10, so the regeneration was capped and casting left him at 4.
+- **Manna regenerates by 2 once per round, not after every half-turn**, capped at 10. Timan's manna stays at 4 through Dua's turn 4, then reads 6 on turn 5. Two timings fit the sample: the attacker regenerates at the start of his own turn, or both regenerate after each full round (both Bantugans have attacked). [Bantugans.c](Bantugans.c) uses the second.
 - **An item found on a turn can be used on that same turn.** Timan finds the Palapa on turn 3 and casts it right away. Afterwards the Palapa shows `0` because it is used up.
 - **The flag order follows who went first in the duel, not the current attacker.** On turn 6, Dua is attacking, yet `0 0 0 1` gives the Blink to **Dua**. So the last two flags belong to the Bantugan who did **not** take the duel's first turn, here Dua.
 - **Stats are printed after the turn is resolved.**
@@ -274,7 +289,7 @@ Decide these, keep them consistent, and check them against any extra test cases 
 | Question | Reasonable choice |
 |---|---|
 | Silver Shield vs. Wooden Spear: who takes the 1 damage? | The statement says "the opponent". Pick one reading and note it in a comment |
-| The attacker chooses the Palapa but doesn't have it, or has under 6 manna | Fall back to a weapon attack |
+| The attacker chooses the Palapa but doesn't have it, or has under 6 manna | Fall back to a weapon attack, or skip the turn |
 | The defender chooses the Blink but doesn't have it, or has under 6 manna | The spell goes through |
 | Does a shield block the spell? | No. Only the Blink counters it |
 | Does the Blink do anything against a weapon attack? | No. It only counters the spell, and it is not used up |
@@ -396,6 +411,42 @@ for each test case:
 
 ---
 
+## About This Solution
+
+[Bantugans.c](Bantugans.c) produces the sample output exactly.
+
+**Structure**
+
+| Piece | Role |
+|---|---|
+| `weaponType`, `shieldType` | Enumerations starting at 1, so input codes are stored directly with a cast |
+| `Bantugan` | `hp`, `mana`, `wpn`, `shld`, `hBlink`, `hPalapa` |
+| `#define` constants | `HEALTH_BAR_FULL`, `MANA_FULL`, `REGEN`, `PALAPA_CHARGE`, `PALAPA_PENDMG`, `BLINK_CHARGE` instead of bare numbers |
+| `isaKangBantugan(name, &b)` | Prints one Bantugan's two output lines. Maps the enumerations to names with `switch` |
+| `validity(&b)` | Clamps health and manna to the range 0–10 |
+| `attack(&atk, &def, palapa, shield, blink)` | Resolves one turn: the spell and the Blink, or the weapon against the shield. Uses nested `switch`es for the 3 × 3 shield cases |
+| `main` | Reads the input, runs `t` rounds of two half-turns, swaps attacker and defender through pointers, prints the verdict |
+
+**How it settles the [unclear rules](#rules-not-spelled-out-in-the-statement)**
+
+| Question | Choice in `Bantugans.c` |
+|---|---|
+| Silver Shield vs. Wooden Spear | The **attacker** takes 1 (reflected) |
+| Manna regeneration | +2 for **both** Bantugans after each full round |
+| Palapa chosen but unavailable or under 6 manna | The attacker **skips** the turn. There's no fallback to the weapon |
+| Blink chosen but unavailable or under 6 manna | The spell hits for 4 |
+| Health below 0 | Clamped to 0 by `validity` |
+| Duel ends before the turns run out | Stops processing, but still reads the remaining turn lines, then prints the verdict |
+| Item flags | Each turn's flags **set** `hPalapa` and `hBlink` to the values read, rather than adding to what is already held |
+
+On the last row: if a Bantugan finds the Blink on one turn, and the next turn's flags are `0`, his Blink is set back to `0`. Then he can only use an item on the turn he finds it. The sample never shows a turn after an item is found, so it doesn't settle which reading is intended. If items should be kept until used, only set a flag when it is `1`:
+
+```c
+if (palapa_first) timan.hPalapa = 1;
+```
+
+---
+
 ## Testing Checklist
 
 | Case | What it checks |
@@ -405,7 +456,7 @@ for each test case:
 | Every weapon × shield, shield raised | All 9 cells of the damage table |
 | Shield not raised | Full weapon damage regardless of shield |
 | Diamond Shield vs. Spear or Ax | The attacker loses health |
-| Palapa with under 6 manna | Falls back to a weapon attack |
+| Palapa with under 6 manna | Your chosen behavior (weapon attack or skipped turn) |
 | Palapa countered by the Blink | No damage; both spend 6 manna; both items gone |
 | Blink owned but not used | The Blink stays (`1`) |
 | A Bantugan reaches 0 health | Correct message; remaining input still consumed |
