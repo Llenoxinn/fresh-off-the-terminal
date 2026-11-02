@@ -269,6 +269,32 @@ For `7 × 13`: `b` goes 13 → 6 → 3 → 1, so there are 3 recursive cases.
 
 ---
 
+## About This Solution
+
+[recursion.c](recursion.c) reproduces the sample output exactly.
+
+| Function | Arguments | How it works |
+|---|---|---|
+| `recursedMultiplication(x, y)` | 2 | Halves `y` each call and returns `halve + halve`, plus `x` when `y` is odd ([Task 1](#task-1-recursive-multiplication)) |
+| `palindromicArray(pal, first, last)` | 3 | Compares `pal[first]` and `pal[last]`, then recurses on `first + 1`, `last - 1` ([Task 2](#task-2-recursive-palindrome-check)) |
+
+**Where it goes beyond the reference version above:**
+
+| Input | `recursion.c` | Why |
+|---|---|---|
+| `x` is 1 (e.g. `1 7`) | `Base case!` immediately, returns `y` | An extra base case: 1 × y = y. The halving version would make 2 recursive calls (7 → 3 → 1) |
+| Array mismatch (e.g. `1 2 3 1`) | Returns 0 **without** printing `Base case!` | Only the bounds-meeting case prints `Base case!` |
+
+Both are reasonable, since the sample covers neither. If the checker has hidden test cases, the second one decides whether a non-palindrome passes.
+
+**Small notes:**
+
+- `int arr[n];` is a **variable-length array** (C99). It is sized at run time from the input `n`.
+- `if(scanf("%i", &n)!= 1 || n < 0);` ends with `;`, so the `if` has an empty body: the input is read, but an invalid `n` isn't handled. It's harmless for valid input.
+- `int *pal` and `int pal[]` mean the same thing as parameters.
+
+---
+
 ## Honor Code
 
 Use **only the first** honor code (no collaboration for laboratory MPs), as a comment in the first lines of the solution:
