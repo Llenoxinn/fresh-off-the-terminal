@@ -4,6 +4,7 @@ CMSC 21 machine problem on **structures**: read two algebraic terms like `4x^3`,
 
 ## Contents
 
+- [Files](#files)
 - [Problem](#problem)
   - [Requirements](#requirements)
   - [Input](#input)
@@ -18,6 +19,20 @@ CMSC 21 machine problem on **structures**: read two algebraic terms like `4x^3`,
 - [Suggested Structure and Functions](#suggested-structure-and-functions)
 - [Edge Cases](#edge-cases)
 - [Testing Checklist](#testing-checklist)
+- [About This Solution](#about-this-solution)
+
+---
+
+## Files
+
+| File | Description |
+|---|---|
+| [endearmentDear.c](endearmentDear.c) | Full solution: a `Poln` structure, a parser, `multiply` and `display` |
+
+```bash
+gcc -Wall -o endearment endearmentDear.c
+./endearment < input.txt
+```
 
 ---
 
@@ -305,3 +320,19 @@ x^2
 3x
 6
 ```
+
+---
+
+## About This Solution
+
+[endearmentDear.c](endearmentDear.c) produces all 5 sample outputs and all 12 outputs in the [testing checklist](#testing-checklist).
+
+| Piece | Role |
+|---|---|
+| `Poln` | `typedef struct` with `coefficient` and `exponent`. The variable is always `x`, so it isn't stored |
+| `findMeTermie(str)` | Parses one term. It scans once for the positions of `x` and `^`, then copies the text before `x` into `OnlyCoefficient` and the text after `^` into `OnlyExponent`, and converts each with `atoi`. It handles a missing coefficient (`1`), a lone `-` (`-1`), a missing `^` (exponent `1`) and no `x` (exponent `0`) |
+| `multiply(first, second)` | Takes two `Poln` values and returns a new one: coefficients multiplied, exponents added |
+| `display(x)` | Prints the special cases in the order from [Displaying a Term](#displaying-a-term): zero coefficient, zero exponent, then exponent 1 or other, each with coefficient 1, −1 or other |
+| `main` | Reads the count, uses `getchar()` to eat the leftover newline, reads each line with `fgets`, strips the `'\n'`, and splits the two terms with `strtok(rml, " ")` |
+
+`strtok` is used only to split the **two terms** apart at the space, where it works well. Each term is then parsed by **finding `x`**, which avoids the [problems](#parsing-with-strtok) of splitting a term on `"x^"`.
