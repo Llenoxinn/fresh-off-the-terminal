@@ -101,9 +101,7 @@ If it does not occur, print `NO`.
 Index:  0         1         2
         012345678901234567890123
         AGCTCTAGAGCTCTCTAGAGAGCT
-          ^^^^      ^^^^^^      ^^
-          2 4       10  14      22
-                      12
+          ^ ^     ^ ^ ^       ^
 ```
 
 `CT` occurs **6** times, at indices **2, 4, 10, 12, 14, 22**.
