@@ -4,6 +4,7 @@ CMSC 21 laboratory machine problem on **recursion**: two small recursive functio
 
 ## Contents
 
+- [Files](#files)
 - [Problem](#problem)
   - [Rules](#rules)
   - [Task 1: Multiplication without `*`](#task-1-multiplication-without-)
@@ -17,7 +18,21 @@ CMSC 21 laboratory machine problem on **recursion**: two small recursive functio
 - [Recursion Basics](#recursion-basics)
 - [Edge Cases](#edge-cases)
 - [Testing Checklist](#testing-checklist)
+- [About This Solution](#about-this-solution)
 - [Honor Code](#honor-code)
+
+---
+
+## Files
+
+| File | Description |
+|---|---|
+| [recursion.c](recursion.c) | Full solution: `recursedMultiplication` (halving) and `palindromicArray` (two bounds moving inward) |
+
+```bash
+gcc -Wall -o recursion recursion.c
+./recursion < input.txt
+```
 
 ---
 
@@ -196,7 +211,7 @@ Called from `main` as `isPalindrome(arr, 0, n - 1)`.
 
 `lo >= hi` covers both lengths. With an odd length the bounds meet at the middle (`lo == hi`). With an even length they cross (`lo > hi`).
 
-**Is a mismatch a base case?** It ends the recursion without another call, so it is one, and printing `Base case!` there is consistent. The sample only shows a palindrome, so it doesn't confirm this.
+**Is a mismatch a base case?** It ends the recursion without another call, so in that sense it is one, and printing `Base case!` there is consistent. But the sample only shows a palindrome, so it can't confirm whether the expected output prints `Base case!` on a mismatch or skips it. [recursion.c](recursion.c) skips it ([details](#about-this-solution)).
 
 ---
 
@@ -247,7 +262,7 @@ multiply(100,50)
 | Input | Expected output |
 |---|---|
 | `100 50` / `5` / `1 1 2 1 1` | The sample: 5 × `Recursive case!`, `Base case!`, `5000`, 2 × `Recursive Case!`, `Base case!`, `The array is palindromic!` |
-| `7 13` / `4` / `1 2 3 1` | 3 × `Recursive case!`, `Base case!`, `91`, 1 × `Recursive Case!`, `Base case!`, `The array is not palindromic!` |
+| `7 13` / `4` / `1 2 3 1` | 3 × `Recursive case!`, `Base case!`, `91`, 1 × `Recursive Case!`, then `Base case!` *only if a mismatch counts as a base case*, then `The array is not palindromic!` |
 | `9 1` / `1` / `5` | `Base case!`, `9`, `Base case!`, `The array is palindromic!` |
 
 For `7 × 13`: `b` goes 13 → 6 → 3 → 1, so there are 3 recursive cases.
