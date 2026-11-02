@@ -4,6 +4,7 @@ CMSC 11 mastery problem on **working with the digits of a number**: rotating a n
 
 ## Contents
 
+- [Files](#files)
 - [Problem](#problem)
   - [Rotating a number to the right](#rotating-a-number-to-the-right)
   - [Consecutive digits that differ by 1](#consecutive-digits-that-differ-by-1)
@@ -20,6 +21,22 @@ CMSC 11 mastery problem on **working with the digits of a number**: rotating a n
   8. [Edge cases](#8-edge-cases)
   9. [Common mistakes](#9-common-mistakes)
 - [Quick Reference](#quick-reference)
+
+---
+
+## Files
+
+| File | Input | Output |
+|---|---|---|
+| [rotateRight.c](rotateRight.c) | One non-negative integer | The number rotated right once |
+| [consecutiveDigits.c](consecutiveDigits.c) | One non-negative integer | `YES` if every pair of consecutive digits differs by 1, `NO` if not, `NOT APPLICABLE` for 1-digit numbers |
+
+Both print `INVALID INPUT` for negative or non-numeric input, and use `long long` so that rotating a large number can't overflow.
+
+```
+$ echo 34567 | ./rotateRight          $ echo 34567 | ./consecutiveDigits
+73456                                 YES
+```
 
 ---
 
