@@ -4,6 +4,7 @@ CMSC 21 mini machine problem on **multidimensional arrays**: read an `n × n` ma
 
 ## Contents
 
+- [Files](#files)
 - [Lesson: Multidimensional Arrays](#lesson-multidimensional-arrays)
   - [Boards and matrices](#boards-and-matrices)
   - [Declaring and initializing](#declaring-and-initializing)
@@ -22,6 +23,20 @@ CMSC 21 mini machine problem on **multidimensional arrays**: read an `n × n` ma
   - [Capacity vs. size](#capacity-vs-size)
 - [Edge Cases](#edge-cases)
 - [Testing Checklist](#testing-checklist)
+- [About This Solution](#about-this-solution)
+
+---
+
+## Files
+
+| File | Description |
+|---|---|
+| [mp6mini.c](mp6mini.c) | Solution: reads the `n × n` matrix and prints the last column, last row and diagonals through three functions |
+
+```bash
+gcc -Wall -o mp6mini mp6mini.c
+./mp6mini < input.txt
+```
 
 ---
 
@@ -407,3 +422,27 @@ for (int i = 0; i < n; i++)
 **The sample** (`n = 4`) gives the output above.
 
 **Largest size:** a 10 × 10 matrix numbered 1–100 row by row should print the last column `10, 20, …, 100`, the last row `91 … 100`, the main diagonal `1 12 23 … 100` and the anti-diagonal `10 19 28 … 91`.
+
+---
+
+## About This Solution
+
+[mp6mini.c](mp6mini.c) prints the right values for the sample in the right order.
+
+| Function | How it works |
+|---|---|
+| `lastColumn(n, m)` | Fixes the column at `n - 1` and loops over the rows, one value per line |
+| `lastRow(n, m)` | Fixes the row at `n - 1` and loops over the columns |
+| `diagonals(n, m)` | `m[i][i]` for the main diagonal, then `m[i][n-i-1]` for the anti-diagonal |
+
+**Variable-length 2D array.** Instead of a fixed `int m[10][10]`, `main` declares `int miniNums[size][size]` after reading the size. The functions take `int n` **first**, then `int miniNums[n][n]`, so the parameter's dimensions can use `n` (C99). The size has to come before the array in the parameter list, because `n` must already be declared when `miniNums[n][n]` is read.
+
+**Differences from the task as stated:**
+
+| Requirement | In `mp6mini.c` |
+|---|---|
+| A **10 × 10** array; functions accept a 10 × 10 array and `n` | An `n × n` variable-length array, passed as `int miniNums[n][n]` |
+| Generate a random number in the diagonals function, not printed | Not generated |
+| Output as in the sample | Each row-style line ends with a **trailing space** (`13 14 15 16 `), and the last line has **no newline** |
+
+The values match the sample, so a checker that ignores trailing whitespace accepts it. One that compares character by character won't. The fix is to print the separator before every element except the first (see [Last row](#last-row)), and to end `diagonals` with `printf("\n");`.
